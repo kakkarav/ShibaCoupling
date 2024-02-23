@@ -2,6 +2,7 @@ import numpy as np
 from . import helper
 
 
+# All the energy scales are in the unit of the supercoducting gap
 # Note R is assumed to be in the unit of lambdaF
 # Here we need to assume about some parameter
 class Shiba:
