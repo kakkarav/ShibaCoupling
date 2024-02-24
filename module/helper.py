@@ -14,6 +14,10 @@ def phaseShift(alpha):
     return np.arctan(alpha)
 
 
+def A(lat, coord1, coord2):
+    pass
+
+
 # Normalzing factor for second order perturabation
 def N2(shib: Shiba, R: float) -> float:
     return 0.0
