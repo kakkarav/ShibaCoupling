@@ -2,12 +2,11 @@ import numpy as np
 
 
 class Lattice:
-    def __init__(self, vec1, vec2, N, R, B):
+    def __init__(self, vec1, vec2, N, R):
         self.vec1 = vec1
         self.vec2 = vec2
         self.size = N
         self.spacing = R
-        self.B = B
 
     def location(self, coord):
         return np.multiply(coord[0], self.vec1) + np.multiply(coord[1], self.vec2)
