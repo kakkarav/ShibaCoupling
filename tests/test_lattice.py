@@ -1,9 +1,6 @@
 import numpy as np
 import pytest
 
-import os
-import sys
-
 from src.coupling import Coupling
 
 
@@ -27,12 +24,43 @@ def Shib(param):
 
 
 def test_location(Shib):
-    assert Shib.shiba.xi == 1
+    assert all((Shib.lat.location([1, 1]) - np.array([1, 1])) == 0)
+    assert all((Shib.lat.location([-1, -1]) - np.array([-1, -1])) == 0)
+    assert all((Shib.lat.location([1, 0]) - np.array([1, 0])) == 0)
+    assert all((Shib.lat.location([0, 1]) - np.array([0, 1])) == 0)
+    assert all(Shib.lat.location([0, 0]) == 0)
 
 
-def test_distanc():
-    pass
+def test_distance(Shib):
+    p1 = np.array([1, 0])
+    p2 = np.array([0, 1])
+    assert Shib.lat.distance(p1, p2) == np.sqrt(2)
+
+    p1 = np.array([-1, 0])
+    p2 = np.array([0, -1])
+    assert Shib.lat.distance(p1, p2) == np.sqrt(2)
+
+    p1 = np.array([0, 1])
+    p2 = np.array([1, 0])
+    assert Shib.lat.distance(p1, p2) == np.sqrt(2)
+
+    p1 = np.array([1, 0])
+    p2 = np.array([1, 0])
+    assert Shib.lat.distance(p1, p2) == 0.0
+
+    p1 = np.array([5, 0])
+    p2 = np.array([0, 0])
+    assert Shib.lat.distance(p1, p2) == 5.0
+
+    p1 = np.array([0, 0])
+    p2 = np.array([5, 0])
+    assert Shib.lat.distance(p1, p2) == 5.0
 
 
-def test_area():
-    pass
+def test_area(Shib):
+    assert Shib.lat.area([0, 0], [1, 0], [0, 1]) == 0.5
+    assert Shib.lat.area([0, 0], [0, 1], [1, 0]) == -0.5
+    assert Shib.lat.area([1, 0], [0, 0], [0, 1]) == -0.5
+    assert Shib.lat.area([0, 1], [0, 0], [1, 0]) == 0.5
+    assert Shib.lat.area([1, 0], [0, 1], [0, 0]) == 0.5
+    assert Shib.lat.area([0, 1], [1, 0], [0, 0]) == -0.5
