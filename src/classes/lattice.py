@@ -8,7 +8,7 @@ class Lattice:
         self.size = N
         self.spacing = R
 
-    def location(self, coord: tuple[int, int]) -> np.ndarray:
+    def location(self, coord: np.ndarray) -> np.ndarray:
         """
         Calculate the absolute coordinate in distance
         """
@@ -28,7 +28,9 @@ class Lattice:
         Calcualte the Aharonov-Bohm phase betwen two points
         A = B(-y,x)/2
         """
-        return B * self.distance(coord1, coord2)
+        x1, y1 = self.location(coord1)
+        x2, y2 = self.location(coord2)
+        return B * (x1 * y2 - x2 * y1) / 2
 
     def area(self, coord1, coord2, coord3):
         """

@@ -17,7 +17,6 @@ def decompose(Matrix: np.ndarray) -> dict:
     digits = list(range(4))
     AllIndices = itertools.product(digits, repeat=dim)
     for index in AllIndices:
-        print(index)
         operator = np.array([1])
         for i in range(dim):
             operator = np.kron(operator, pauli[index[i]])

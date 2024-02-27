@@ -2,6 +2,7 @@ import numpy as np
 from numpy import cos, sin, pi, exp
 from src.classes.params import Shiba
 from src.classes.lattice import Lattice
+from src.decomposition import decompose
 
 
 def A(shib: Shiba, phase: float, R: float) -> complex:
@@ -27,7 +28,7 @@ def B(shib: Shiba, phase: float, R: float) -> complex:
     beta = shib.beta
     xi = shib.xi
     delta = shib.delta
-    matrix = 8 * beta * alpha**2 / (1 + alpha**2) ^ (3 / 2)
+    matrix = 8 * beta * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
         cos(phase) * cos(2 * pi * R) * sin(delta)
@@ -43,7 +44,7 @@ def C(shib: Shiba, phase: float, R: float) -> complex:
     alpha = shib.alpha
     xi = shib.xi
     delta = shib.delta
-    matrix = -4 * alpha**2 / (1 + alpha**2) ^ (3 / 2)
+    matrix = -4 * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
         cos(phase) * sin(2 * pi * R) * cos(delta)
@@ -60,7 +61,7 @@ def D(shib: Shiba, phase: float, R: float) -> complex:
     beta = shib.beta
     xi = shib.xi
     delta = shib.delta
-    matrix = 8 * beta * alpha**2 / (1 + alpha**2) ^ (3 / 2)
+    matrix = 8 * beta * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
         cos(phase) * sin(2 * pi * R) * cos(delta)
@@ -73,7 +74,11 @@ def cc(number: complex) -> complex:
     return np.conj(number)
 
 
-def M1(
+def hc(matrix: np.ndarray) -> np.ndarray:
+    return np.conj(matrix).T
+
+
+def destroy(
     shiba: Shiba,
     lat: Lattice,
     coord1: np.ndarray,
@@ -83,7 +88,7 @@ def M1(
     Transfer matrix between subgap states from spin conserving terms
     """
     R = lat.distance(coord1, coord2)
-    phase = 1
+    phase = lat.phase(shiba.B, coord1, coord2)
     Aij = A(shiba, phase, R)
     Bij = B(shiba, phase, R)
     return np.array(
@@ -100,7 +105,7 @@ def M1(
     )
 
 
-def M2(
+def create(
     shiba: Shiba,
     lat: Lattice,
     coord1: np.ndarray,
@@ -108,9 +113,10 @@ def M2(
 ) -> np.ndarray:
     """
     Transfer matrix between subgap states from spin-flipping terms
+    Create a particle at the first and the second index (coord1, coord, *)
     """
     R = lat.distance(coord1, coord2)
-    phase = 1
+    phase = lat.phase(shiba.B, coord1, coord2)
     Aij = A(shiba, phase, R)
     Bij = B(shiba, phase, R)
     return np.array(
@@ -127,7 +133,7 @@ def M2(
     )
 
 
-def M3(
+def hop(
     shiba: Shiba,
     lat: Lattice,
     coord1: np.ndarray,
@@ -135,9 +141,11 @@ def M3(
 ) -> np.ndarray:
     """
     Transfer matrix between subgap states from pairing term
+    The YSR quasiparticle hop from the second to the third index.
+    ( occupied , coord1, *) -> (occupied , *, coord2)
     """
     R = lat.distance(coord1, coord2)
-    phase = 1
+    phase = lat.phase(shiba.B, coord1, coord2)
     Cij = C(shiba, phase, R)
     Dij = D(shiba, phase, R)
     return np.array(
@@ -173,18 +181,37 @@ def U():
 
 
 def secondOrder(
-    shib: Shiba, coord1: np.ndarray, coord2: np.ndarray
+    lat: Lattice,
+    shib: Shiba,
+    coord1: np.ndarray,
+    coord2: np.ndarray,
 ) -> dict[tuple, float]:
     """
-    Return the table of all coupling arising from second order perturbation theory
+    Return the table of all coupling arising from second order perturbation theory.
+    We use Pauli operator as our basis.
+    Spin at the third index does not participate in the interaction.
     """
-    return {}
+    matrix = create(shib, lat, coord1, coord2)
+    return decompose(hc(matrix) @ matrix)
 
 
-def ThirdOrder(
-    shib: Shiba, coord1: np.ndarray, coord2: np.ndarray, coord3: np.ndarray
+def thirdOrder(
+    lat: Lattice,
+    shib: Shiba,
+    coord1: np.ndarray,
+    coord2: np.ndarray,
+    coord3: np.ndarray,
 ) -> dict[tuple, float]:
     """
-    Return the table of all coupling arising from third order perturbation theory
+    Return the table of all coupling arising from third order perturbation theory.
+    We use Pauli operator as our basis
     """
-    return {}
+    matrix1 = create(shib, lat, coord1, coord2)
+    matrix2 = hop(shib, lat, coord2, coord3)
+    matrix3 = destroy(shib, lat, coord3, coord1)
+    operator = matrix3 @ matrix2 @ matrix1
+    operator1 = operator + hc(operator)
+
+    operator2 = hc(U()) @ operator1 @ U()
+    operator3 = hc(U()) @ operator2 @ U()
+    return decompose(operator1 + operator2 + operator3)

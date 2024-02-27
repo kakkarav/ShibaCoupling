@@ -64,3 +64,53 @@ def test_area(Shib):
     assert Shib.lat.area([0, 1], [0, 0], [1, 0]) == 0.5
     assert Shib.lat.area([1, 0], [0, 1], [0, 0]) == 0.5
     assert Shib.lat.area([0, 1], [1, 0], [0, 0]) == -0.5
+
+
+def test_phase(Shib):
+    B = 1
+    # same point
+    p1 = np.array([0, 0])
+    p2 = np.array([0, 0])
+    assert Shib.lat.phase(B, p1, p2) == 0.0
+
+    # same point
+    p1 = np.array([1, 0])
+    p2 = np.array([1, 0])
+    assert Shib.lat.phase(B, p1, p2) == 0.0
+
+    # back and forth
+    p1 = np.array([1, 0])
+    p2 = np.array([0, 1])
+    assert Shib.lat.phase(B, p1, p2) + Shib.lat.phase(B, p2, p1) == 0.0
+
+    # back and forth
+    p1 = np.array([1, 0])
+    p2 = np.array([0, 1])
+    assert Shib.lat.phase(B, p1, p2) + Shib.lat.phase(B, p2, p1) == 0.0
+
+    # Go around a right triangle
+    p1 = np.array([0, 0])
+    p2 = np.array([1, 0])
+    p3 = np.array([0, 1])
+    # countercolckwise
+    assert (
+        Shib.lat.phase(B, p1, p2)
+        + Shib.lat.phase(B, p2, p3)
+        + Shib.lat.phase(B, p3, p1)
+        == 0.5
+    )
+    # Clockwise
+    assert (
+        Shib.lat.phase(B, p1, p3)
+        + Shib.lat.phase(B, p3, p2)
+        + Shib.lat.phase(B, p2, p1)
+        == -0.5
+    )
+
+    # Compare the flux with the area when B = 1
+    p1 = np.array([2, 0])
+    p2 = np.array([1, 3])
+    p3 = np.array([0, 1])
+    assert Shib.lat.phase(B, p1, p2) + Shib.lat.phase(B, p2, p3) + Shib.lat.phase(
+        B, p3, p1
+    ) == Shib.lat.area(p1, p2, p3)
