@@ -16,7 +16,7 @@ def phaseShift(alpha):
 # Note R is assumed to be in the unit of lambdaF
 # Here we need to assume about some parameter
 class Shiba:
-    def __init__(self, alpha, beta, lambdaF, xi, N, R, B):
+    def __init__(self, alpha, beta, lambdaF, xi, B):
         self.alpha = alpha
         self.beta = beta
         self.xi = xi / lambdaF

@@ -1,5 +1,5 @@
-from src.classes import params, lattice
-from src import matrixElement as me
+from .classes import params, lattice
+from . import matrixElement as me
 
 
 class Coupling:
@@ -7,11 +7,11 @@ class Coupling:
         self,
     ):
         self.lat = lattice.Lattice(1, 1, 1, 1)
-        self.shiba = params.Shiba(1, 1, 1, 1, 1, 1, 1)
+        self.shiba = params.Shiba(1, 1, 1, 1, 1)
 
     def coupling(self):
         return me.U
 
 
 def test():
-    return params.Shiba(1, 1, 1, 1, 1, 1, 1)
+    return params.Shiba(1, 1, 1, 1, 1)
