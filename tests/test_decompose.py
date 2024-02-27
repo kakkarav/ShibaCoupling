@@ -1,8 +1,6 @@
 import numpy as np
 import pytest
 
-import os
-import sys
 
 from src import decomposition as decom
 
