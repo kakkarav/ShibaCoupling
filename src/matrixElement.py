@@ -1,5 +1,5 @@
 import numpy as np
-from module.classes.params import Shiba
+from src.classes.params import Shiba
 
 
 # Normalzing factor for second order perturabation
@@ -17,10 +17,14 @@ def N3(
     return 1.0
 
 
+# Matrix element for hopping from non spin flip
+
+
 def A(shib: Shiba, i: int, j: int) -> complex:
     return complex(shib.xi, j)
 
 
+# Matrix element for hopping from spin flipping terms
 def B(shib: Shiba, i: int, j: int) -> complex:
     return complex(shib.xi, j)
 

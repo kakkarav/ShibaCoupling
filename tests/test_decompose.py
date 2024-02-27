@@ -8,10 +8,35 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../s
 
 import decomposition as decom
 
-matrix = np.eye(2)
+pauli = {}
+pauli[0] = np.eye(2)
+pauli[1] = np.array([[0.0, 1.0], [1.0, 0.0]])
+pauli[2] = np.array([[0.0, -1j], [1j, 0.0]])
+pauli[3] = np.array([[1.0, 0.0], [0, -1.0]])
 
-testmatrix = np.kron(matrix, matrix)
+
+# Test 2-body decompostion
+def test_decompose_indenity1():
+    for i in range(3):
+        for j in range(3):
+            testmatrix = np.kron(pauli[i], pauli[j])
+            result = decom.decompose(testmatrix)
+            for k1, k2 in result.keys():
+                if k1 == i and k2 == j:
+                    assert result[(k1, k2)] == 1
+                else:
+                    assert result[(k1, k2)] == 0
 
 
-def test_decompose_indenity():
-    assert decom.decompose(testmatrix)[(0, 0)] == 1
+# Test 3-body decompostion
+def test_decompose_indenity2():
+    for i in range(3):
+        for j in range(3):
+            for k in range(3):
+                testmatrix = np.kron(np.kron(pauli[i], pauli[j]), pauli[k])
+                result = decom.decompose(testmatrix)
+                for k1, k2, k3 in result.keys():
+                    if k1 == i and k2 == j and k3 == k:
+                        assert result[(k1, k2, k3)] == 1
+                    else:
+                        assert result[(k1, k2, k3)] == 0

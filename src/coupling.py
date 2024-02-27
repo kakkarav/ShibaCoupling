@@ -1,5 +1,5 @@
-from module.classes import params, lattice
-from module import matrixElement as me
+from src.classes import params, lattice
+from src import matrixElement as me
 
 
 class Coupling:

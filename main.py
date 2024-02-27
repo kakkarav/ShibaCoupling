@@ -1,5 +1,5 @@
-from module.coupling import test
-from module.coupling import Coupling
+from src.coupling import test
+from src.coupling import Coupling
 
 if __name__ == "__main__":
     shib = Coupling()
