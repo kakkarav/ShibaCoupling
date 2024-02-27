@@ -10,7 +10,7 @@ pauli[3] = np.array([[1.0, 0.0], [0, -1.0]])
 
 def decompose(Matrix: np.ndarray) -> dict:
     """
-    Decompose a matrix into its Pauli components
+    Decompose a matrix into its Pauli components (not spin 1/2 operators)
     """
     table = {}
     dim = int(np.log2(len(Matrix)))

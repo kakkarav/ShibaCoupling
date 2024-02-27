@@ -21,4 +21,5 @@ class Shiba:
         self.beta = beta
         self.xi = xi / lambdaF
         self.energy = energy(alpha)
+        self.delta = phaseShift(alpha)
         self.B = B
