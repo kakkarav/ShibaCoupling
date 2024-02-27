@@ -119,17 +119,19 @@ def create(
     phase = lat.phase(shiba.B, coord1, coord2)
     Aij = A(shiba, phase, R)
     Bij = B(shiba, phase, R)
-    return np.array(
-        [
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [-Bij, 0, Aij, 0, 0, 0, -cc(Bij), 0],
-            [0, -Bij, 0, Aij, 0, 0, 0, -cc(Bij)],
-            [cc(Bij), 0, 0, 0, -Aij, 0, Bij, 0],
-            [0, cc(Bij), 0, 0, 0, -Aij, 0, Bij],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-        ]
+    return hc(
+        np.array(
+            [
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [-Bij, 0, -Aij, 0, 0, 0, -cc(Bij), 0],
+                [0, -Bij, 0, -Aij, 0, 0, 0, -cc(Bij)],
+                [cc(Bij), 0, 0, 0, Aij, 0, Bij, 0],
+                [0, cc(Bij), 0, 0, 0, Aij, 0, Bij],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0],
+            ]
+        )
     )
 
 

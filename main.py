@@ -7,11 +7,11 @@ def params():
     vec2 = np.array([0, 1])
     N = 10
     R = 1
-    alpha = 1
+    alpha = 0.9
     beta = 1
     lambdaF = 1
     xi = 1
-    B = 0
+    B = 1
     return [vec1, vec2, N, R, alpha, beta, lambdaF, xi, B]
 
 
@@ -26,6 +26,7 @@ if __name__ == "__main__":
     for key, value in second.items():
         if value != 0.0:
             print(key, value)
+    print("=============================================")
     print("Third order perturbation")
     for key, value in third.items():
         if value != 0.0:

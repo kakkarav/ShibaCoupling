@@ -10,7 +10,7 @@ def param():
     vec2 = np.array([0, 1])
     N = 10
     R = 1
-    alpha = 1
+    alpha = 0.9
     beta = 1
     lambdaF = 1
     xi = 1
