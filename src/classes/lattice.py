@@ -7,20 +7,17 @@ class Lattice:
         self.vec2 = np.array(vec2)
         self.spacing = R
 
-    def location(self, coord: np.ndarray) -> np.ndarray:
+    def location(self, coord: np.ndarray) -> np.ndarray[float, float]:
         """
         Calculate the absolute coordinate in distance
         """
         return (coord[0] * self.vec1 + coord[1] * self.vec2) * self.spacing
 
-    def distance(self, coord1, coord2):
+    def distance(self, coord1: np.ndarray, coord2: np.ndarray) -> float:
         """
         Calculate the distance between two points
         """
-        return (
-            np.sqrt((coord1[0] - coord2[0]) ** 2 + (coord1[1] - coord2[1]) ** 2)
-            ** self.spacing
-        )
+        return np.linalg.norm(self.location(coord1) - self.location(coord2))
 
     def phase(self, B: float, coord1: np.ndarray, coord2: np.ndarray) -> float:
         """
@@ -37,7 +34,7 @@ class Lattice:
         Calcuate the area of a triangle formed by three points
         The sign of the area depends on the order of three points using the right hand rule
         """
-        x1, y1 = coord1
-        x2, y2 = coord2
-        x3, y3 = coord3
-        return self.spacing**2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2
+        x1, y1 = self.location(coord1)
+        x2, y2 = self.location(coord2)
+        x3, y3 = self.location(coord3)
+        return (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2

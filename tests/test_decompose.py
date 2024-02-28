@@ -35,3 +35,20 @@ def test_decompose_indenity2():
                         assert result[(k1, k2, k3)] == 1
                     else:
                         assert result[(k1, k2, k3)] == 0
+
+
+# Test 3-body decompostion
+def test_decompose_indenity3():
+    for i in range(3):
+        for j in range(3):
+            for k in range(3):
+                testmatrix = np.kron(np.kron(pauli[i], pauli[j]), pauli[k])
+                testmatrix = testmatrix + np.kron(np.kron(pauli[1], pauli[2]), pauli[3])
+                result = decom.decompose(testmatrix)
+                for k1, k2, k3 in result.keys():
+                    if k1 == i and k2 == j and k3 == k:
+                        assert result[(k1, k2, k3)] == 1
+                    elif k1 == 1 and k2 == 2 and k3 == 3:
+                        assert result[(k1, k2, k3)] == 1
+                    else:
+                        assert result[(k1, k2, k3)] == 0
