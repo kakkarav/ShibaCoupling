@@ -3,8 +3,8 @@ from src import matrixElement as me
 
 
 class Coupling:
-    def __init__(self, vec1, vec2, N, R, alpha, beta, lambdaF, xi, B):
-        self.lat = lattice.Lattice(vec1, vec2, N, R)
+    def __init__(self, vec1, vec2, R, alpha, beta, lambdaF, xi, B):
+        self.lat = lattice.Lattice(vec1, vec2, R)
         self.shiba = params.Shiba(alpha, beta, lambdaF, xi, B)
 
     def secondOrder(self, coord1, coord2):

@@ -2,17 +2,16 @@ import numpy as np
 
 
 class Lattice:
-    def __init__(self, vec1: np.ndarray, vec2: np.ndarray, N: int, R) -> None:
+    def __init__(self, vec1: np.ndarray, vec2: np.ndarray, R: float) -> None:
         self.vec1 = np.array(vec1)
         self.vec2 = np.array(vec2)
-        self.size = N
         self.spacing = R
 
     def location(self, coord: np.ndarray) -> np.ndarray:
         """
         Calculate the absolute coordinate in distance
         """
-        return coord[0] * self.vec1 + coord[1] * self.vec2
+        return (coord[0] * self.vec1 + coord[1] * self.vec2) * self.spacing
 
     def distance(self, coord1, coord2):
         """
@@ -30,7 +29,8 @@ class Lattice:
         """
         x1, y1 = self.location(coord1)
         x2, y2 = self.location(coord2)
-        return B * (x1 * y2 - x2 * y1) / 2
+        normalization = 1
+        return normalization * B * (x1 * y2 - x2 * y1) / 2
 
     def area(self, coord1, coord2, coord3):
         """
@@ -40,4 +40,4 @@ class Lattice:
         x1, y1 = coord1
         x2, y2 = coord2
         x3, y3 = coord3
-        return (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2
+        return self.spacing**2 * (x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2

@@ -8,14 +8,13 @@ from src.coupling import Coupling
 def param():
     vec1 = np.array([1, 0])
     vec2 = np.array([0, 1])
-    N = 10
     R = 1
     alpha = 0.9
     beta = 1
     lambdaF = 1
     xi = 1
     B = 1
-    return [vec1, vec2, N, R, alpha, beta, lambdaF, xi, B]
+    return [vec1, vec2, R, alpha, beta, lambdaF, xi, B]
 
 
 @pytest.fixture

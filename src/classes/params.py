@@ -23,3 +23,9 @@ class Shiba:
         self.energy = energy(alpha)
         self.delta = phaseShift(alpha)
         self.B = B
+
+    def __repr__(self):
+        ans = ""
+        for key, value in self.__dict__.items():
+            ans += f"{key} : {value} \n"
+        return ans

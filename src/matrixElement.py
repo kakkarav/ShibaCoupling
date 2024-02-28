@@ -208,12 +208,20 @@ def thirdOrder(
     Return the table of all coupling arising from third order perturbation theory.
     We use Pauli operator as our basis
     """
+    # matrix1 = create(shib, lat, coord1, coord2)
+    # matrix2 = hop(shib, lat, coord3, coord1)
+    # matrix3 = destroy(shib, lat, coord2, coord3)
     matrix1 = create(shib, lat, coord1, coord2)
-    matrix2 = hop(shib, lat, coord2, coord3)
-    matrix3 = destroy(shib, lat, coord3, coord1)
-    operator = matrix3 @ matrix2 @ matrix1
-    operator1 = operator + hc(operator)
-
-    operator2 = hc(U()) @ operator1 @ U()
-    operator3 = hc(U()) @ operator2 @ U()
-    return decompose(operator1 + operator2 + operator3)
+    matrix2 = hop(shib, lat, coord3, coord1)
+    matrix3 = destroy(shib, lat, coord2, coord3)
+    operator1 = matrix3 @ matrix2 @ matrix1
+    operator2 = U() @ operator1 @ U().T
+    operator3 = U() @ operator2 @ U().T
+    return decompose(
+        operator1
+        + operator2
+        + operator3
+        + hc(operator1)
+        + hc(operator2)
+        + hc(operator3)
+    )
