@@ -16,6 +16,7 @@ def A(shib: Shiba, phase: float, R: float) -> complex:
     matrix = -4 * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * cos(phase) * cos(2 * pi * R) * sin(delta)
+    print("A:", matrix)
     return matrix
 
 
@@ -34,6 +35,7 @@ def B(shib: Shiba, phase: float, R: float) -> complex:
         cos(phase) * cos(2 * pi * R) * sin(delta)
         + 1j * sin(phase) * sin(2 * pi * R) * cos(delta)
     )
+    print("B:", matrix)
     return matrix
 
 
@@ -50,6 +52,7 @@ def C(shib: Shiba, phase: float, R: float) -> complex:
         cos(phase) * sin(2 * pi * R) * cos(delta)
         + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
     )
+    print("C:", matrix)
     return matrix
 
 
@@ -67,6 +70,7 @@ def D(shib: Shiba, phase: float, R: float) -> complex:
         cos(phase) * sin(2 * pi * R) * cos(delta)
         + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
     )
+    print("D:", matrix)
     return matrix
 
 
@@ -212,8 +216,8 @@ def thirdOrder(
     # matrix2 = hop(shib, lat, coord3, coord1)
     # matrix3 = destroy(shib, lat, coord2, coord3)
     matrix1 = create(shib, lat, coord1, coord2)
-    matrix2 = hop(shib, lat, coord3, coord1)
-    matrix3 = destroy(shib, lat, coord2, coord3)
+    matrix2 = hop(shib, lat, coord2, coord3)
+    matrix3 = destroy(shib, lat, coord3, coord1)
     operator1 = matrix3 @ matrix2 @ matrix1
     operator2 = U() @ operator1 @ U().T
     operator3 = U() @ operator2 @ U().T

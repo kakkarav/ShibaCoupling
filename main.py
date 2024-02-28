@@ -21,9 +21,9 @@ def params():
     # Fermi wavelength in meter
     lambdaF = 0.001
     # Superconductor coherence length in meter
-    xi = 1000
+    xi = 10
     # Magnetic field in Tesla
-    B = 100
+    B = 0.1
     return [vec1, vec2, R, alpha, beta, lambdaF, xi, B]
 
 
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     # Compute the effecitve coupling for the second order perturbation
     # between impurities at coordinate (1,0) and (0,0)
-    second = shib.secondOrder([0, 1], [0, 0])
+    second = shib.secondOrder([0, 1], [0, 2])
 
     # All of the paramters are stored in
     print("Here are the model paramters")
@@ -47,26 +47,30 @@ if __name__ == "__main__":
 
     # Compute the effecitve coupling for the third order perturbation
     # between impurities at coordinate (0,1), (0, 0), and (1,0)
-    third = shib.thirdOrder([0, 1], [0, 0], [1, 0])
+    third = shib.thirdOrder([0, 4], [0, 5], [0, 6])
 
     # the result is store in the dictionary where the key is the tuple of pauli string
     # E.g. (0,0,1) = IIX, (1,2,3) = XYZ
+
+    # Print out the result
     print("Second order perturbation")
     for key, value in second.items():
         if value != 0.0:
             print(key, value)
+
     print("=============================================\n")
     print("Third order perturbation")
     for key, value in third.items():
-        if np.abs(value) != 0:
-            print(key, value)
-        # print(key, value)
+        if np.abs(value) > 1e-14:
+            print(f"{key} : {np.real(value)}")
+        else:
+            print(f"\033[93m {key}: {np.real(value)}\033[0m")
 
     print("=============================================\n")
     print(me.A(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.B(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.C(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.D(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.cc(me.D(shib.shiba, 0, np.sqrt(20 / 2 / np.pi))))
-
-    print(np.pi / 4 / shib.lat.phase(shib.shiba.B, np.array([1, 0]), np.array([0, 1])))
+    # print(me.B(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    # print(me.C(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    # print(me.D(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    # print(me.cc(me.D(shib.shiba, 0, np.sqrt(20 / 2 / np.pi))))
+    #
+    # print(np.pi / 4 / shib.lat.phase(shib.shiba.B, np.array([1, 0]), np.array([0, 1])))
