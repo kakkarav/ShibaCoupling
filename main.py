@@ -6,13 +6,20 @@ from src.classes.params import Params
 
 
 params = Params(
+    # The unit vectors in the Cartesian coordinate
     vec1=np.array([1, 0]),
     vec2=np.array([np.cos(np.pi / 3), np.sin(np.pi / 3)]),
+    # The lattice spacing in meter
     R=np.sqrt(2) / 2 / np.pi,
+    # The dimensionless exchange coupling
     alpha=0.98,
+    # The small perturbative parameter for the spin flip term
     beta=1,
+    # Fermi wavelength in meter
     lambda_F=0.001,
+    # Superconductor coherence length in meter
     xi=1000,
+    # Magnetic field in Tesla
     B=100,
 )
 
