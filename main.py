@@ -1,4 +1,4 @@
-# Example of how to use the the code
+# Example of how to use the the module
 import numpy as np
 from src.coupling import Coupling
 from src import matrixElement as me
@@ -55,10 +55,3 @@ if __name__ == "__main__":
             print(key, value)
 
     print("=============================================\n")
-    print(me.get_A(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.get_B(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.get_C(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.get_D(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    print(me.cc(me.get_D(shib.shiba, 0, np.sqrt(20 / 2 / np.pi))))
-
-    print(np.pi / 4 / shib.lat.phase(shib.shiba.B, np.array([1, 0]), np.array([0, 1])))
