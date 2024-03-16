@@ -1,35 +1,25 @@
+# Example of how to use the the code
 import numpy as np
 from src.coupling import Coupling
 from src import matrixElement as me
+from src.classes.params import Params
 
 
-# Example of how to use the the code
-#
-def params():
-    # # The lattice unit vectors in the Cartesian coordinate
-    # vec1 = np.array([1, 0])
-    # vec2 = np.array([0, 1])
-    # The lattice unit vectors in the Cartesian coordinate
-    vec1 = np.array([1, 0])
-    vec2 = np.array([np.cos(np.pi / 3), np.sin(np.pi / 3)])
-    # The lattice spacing in meter
-    R = np.sqrt(2) / 2 / np.pi
-    # The dimensionless exchange coupling
-    alpha = 0.98
-    # The small perturbative parameter for the spin flip term
-    beta = 1
-    # Fermi wavelength in meter
-    lambdaF = 0.001
-    # Superconductor coherence length in meter
-    xi = 10
-    # Magnetic field in Tesla
-    B = 0.1
-    return [vec1, vec2, R, alpha, beta, lambdaF, xi, B]
+params = Params(
+    vec1=np.array([1, 0]),
+    vec2=np.array([np.cos(np.pi / 3), np.sin(np.pi / 3)]),
+    R=np.sqrt(2) / 2 / np.pi,
+    alpha=0.98,
+    beta=1,
+    lambda_F=0.001,
+    xi=1000,
+    B=100,
+)
 
 
 if __name__ == "__main__":
     # Inititate the coupling class
-    shib = Coupling(*params())
+    shib = Coupling(params)
 
     # Compute the effecitve coupling for the second order perturbation
     # between impurities at coordinate (1,0) and (0,0)
@@ -61,16 +51,14 @@ if __name__ == "__main__":
     print("=============================================\n")
     print("Third order perturbation")
     for key, value in third.items():
-        if np.abs(value) > 1e-14:
-            print(f"{key} : {np.real(value)}")
-        else:
-            print(f"\033[93m {key}: {np.real(value)}\033[0m")
+        if np.abs(value) != 0:
+            print(key, value)
 
     print("=============================================\n")
-    print(me.A(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    # print(me.B(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    # print(me.C(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    # print(me.D(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
-    # print(me.cc(me.D(shib.shiba, 0, np.sqrt(20 / 2 / np.pi))))
-    #
-    # print(np.pi / 4 / shib.lat.phase(shib.shiba.B, np.array([1, 0]), np.array([0, 1])))
+    print(me.get_A(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    print(me.get_B(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    print(me.get_C(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    print(me.get_D(shib.shiba, 0, np.sqrt(2) / 2 / np.pi))
+    print(me.cc(me.get_D(shib.shiba, 0, np.sqrt(20 / 2 / np.pi))))
+
+    print(np.pi / 4 / shib.lat.phase(shib.shiba.B, np.array([1, 0]), np.array([0, 1])))

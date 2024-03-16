@@ -1,13 +1,14 @@
 import numpy as np
+from src.classes.params import Params
 
 
 class Lattice:
-    def __init__(self, vec1: np.ndarray, vec2: np.ndarray, R: float) -> None:
-        self.vec1 = np.array(vec1)
-        self.vec2 = np.array(vec2)
-        self.spacing = R
+    def __init__(self, params: Params) -> None:
+        self.vec1 = np.array(params.vec1)
+        self.vec2 = np.array(params.vec2)
+        self.spacing = params.R
 
-    def location(self, coord: np.ndarray) -> np.ndarray[float, float]:
+    def location(self, coord: np.ndarray) -> np.ndarray:
         """
         Calculate the absolute coordinate in distance
         """
@@ -17,7 +18,7 @@ class Lattice:
         """
         Calculate the distance between two points
         """
-        return np.linalg.norm(self.location(coord1) - self.location(coord2))
+        return float(np.linalg.norm(self.location(coord1) - self.location(coord2)))
 
     def phase(self, B: float, coord1: np.ndarray, coord2: np.ndarray) -> float:
         """

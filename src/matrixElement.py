@@ -5,7 +5,7 @@ from src.classes.lattice import Lattice
 from src.decomposition import decompose
 
 
-def A(shib: Shiba, phase: float, R: float) -> complex:
+def get_A(shib: Shiba, phase: float, R: float) -> complex:
     """
     Matrix element for Ising pair creation ( initial state is the ket)
     We set Delta (superconducting gap = 1)
@@ -20,7 +20,7 @@ def A(shib: Shiba, phase: float, R: float) -> complex:
     return matrix
 
 
-def B(shib: Shiba, phase: float, R: float) -> complex:
+def get_B(shib: Shiba, phase: float, R: float) -> complex:
     """
     Matrix element for spin flip pair creation
     We set Delta (superconducting gap = 1)
@@ -39,7 +39,7 @@ def B(shib: Shiba, phase: float, R: float) -> complex:
     return matrix
 
 
-def C(shib: Shiba, phase: float, R: float) -> complex:
+def get_C(shib: Shiba, phase: float, R: float) -> complex:
     """
     Matrix element for Ising hopping
     """
@@ -56,7 +56,7 @@ def C(shib: Shiba, phase: float, R: float) -> complex:
     return matrix
 
 
-def D(shib: Shiba, phase: float, R: float) -> complex:
+def get_D(shib: Shiba, phase: float, R: float) -> complex:
     """
     Matrix element for spin flipe hopping
     """
@@ -90,11 +90,13 @@ def destroy(
 ) -> np.ndarray:
     """
     Transfer matrix between subgap states from spin conserving terms
+    This matrix destroys quasiparticle at the first and second positon
+    of the Paulio string index ( coord2, * , coord1)
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
-    Aij = A(shiba, phase, R)
-    Bij = B(shiba, phase, R)
+    Aij = get_A(shiba, phase, R)
+    Bij = get_B(shiba, phase, R)
     return np.array(
         [
             [0, 0, 0, 0, 0, 0, 0, 0],
@@ -117,12 +119,13 @@ def create(
 ) -> np.ndarray:
     """
     Transfer matrix between subgap states from spin-flipping terms
-    Create a particle at the first and the second index (coord1, coord, *)
+    This matrix create quasiparticle at the first and second positon
+    of the Pauli string index (coord1, coord2, *)
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
-    Aij = A(shiba, phase, R)
-    Bij = B(shiba, phase, R)
+    Aij = get_A(shiba, phase, R)
+    Bij = get_B(shiba, phase, R)
     return hc(
         np.array(
             [
@@ -152,8 +155,8 @@ def hop(
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
-    Cij = C(shiba, phase, R)
-    Dij = D(shiba, phase, R)
+    Cij = get_C(shiba, phase, R)
+    Dij = get_D(shiba, phase, R)
     return np.array(
         [
             [Cij, 0, Dij, 0, 0, 0, 0, 0],
@@ -210,11 +213,9 @@ def thirdOrder(
 ) -> dict[tuple, float]:
     """
     Return the table of all coupling arising from third order perturbation theory.
-    We use Pauli operator as our basis
+    We use Pauli string (i,j,k) which cooresponds to position (coord1, coord2, coord3)
+    as our basis
     """
-    # matrix1 = create(shib, lat, coord1, coord2)
-    # matrix2 = hop(shib, lat, coord3, coord1)
-    # matrix3 = destroy(shib, lat, coord2, coord3)
     matrix1 = create(shib, lat, coord1, coord2)
     matrix2 = hop(shib, lat, coord2, coord3)
     matrix3 = destroy(shib, lat, coord3, coord1)
@@ -229,3 +230,8 @@ def thirdOrder(
         + hc(operator2)
         + hc(operator3)
     )
+    # matrix1 = create(shib, lat, coord1, coord2)
+    # matrix2 = hop(shib, lat, coord2, coord3)
+    # matrix3 = destroy(shib, lat, coord3, coord1)
+    # operator1 = matrix3 @ matrix2 @ matrix1
+    # return decompose(operator1 + hc(operator1))
