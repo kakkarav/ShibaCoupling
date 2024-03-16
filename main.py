@@ -53,5 +53,3 @@ if __name__ == "__main__":
     for key, value in third.items():
         if np.abs(value) != 0:
             print(key, value)
-
-    print("=============================================\n")
