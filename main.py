@@ -1,7 +1,6 @@
 # Example of how to use the the module
 import numpy as np
 from src.coupling import Coupling
-from src import matrixElement as me
 from src.classes.params import Params
 
 
