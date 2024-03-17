@@ -39,21 +39,6 @@ where \(\alpha, \beta = x, y, z\) and \(\sigma_{\alpha}\) are the Pauli matrices
 - `delta` (float): The superconducting gap
 - `N` (float): The number of lattice sites
 
-    # The unit vectors in the Cartesian coordinate
-    vec1: np.ndarray
-    vec2: np.ndarray
-    # The lattice spacing in meter
-    R: float
-    # The dimensionless exchange coupling
-    alpha: float
-    # The small perturbative parameter for the spin flip term
-    beta: float
-    # Fermi wavelength in meter
-    lambda_F: float
-    # Superconductor coherence length in meter
-    xi: float
-    # Magnetic field in Tesla
-    B: float
 # Example
 
 
