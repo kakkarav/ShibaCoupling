@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 
 # the classical shiba energy in the unit of superconducting gap
-def energy(alpha: float) -> float:
+def energy(alpha: (float)) -> float:
     return (1 - alpha**2) / (1 + alpha**2)
 
 

@@ -27,33 +27,34 @@ if __name__ == "__main__":
     # Inititate the coupling class
     shib = Coupling(params)
 
-    # Compute the effecitve coupling for the second order perturbation
-    # between impurities at coordinate (1,0) and (0,0)
-    second = shib.secondOrder([0, 1], [0, 2])
+    # Create coordinates for three impurities
+    coord1 = np.array([1, 0])
+    coord2 = np.array([0, 1])
+    coord3 = np.array([1, 1])
+
+    # Compute the effecitve coupling for the second order perturbation between impurities at coordinate (1,0) and (0,0)
+    second = shib.secondOrder(coord1, coord2)
 
     # All of the paramters are stored in
     print("Here are the model paramters")
     print(shib.shiba)
 
-    # You can find the actualy distance between two points
-    # at coord1 and coord2
-    coord1 = np.array([1, 0])
-    coord2 = np.array([0, 1])
+    # You can find the actualy distance between two points at coord1 and coord2
     print(f"Distance between two point : {shib.lat.distance(coord2, coord2)}\n")
 
-    # Compute the effecitve coupling for the third order perturbation
-    # between impurities at coordinate (0,1), (0, 0), and (1,0)
-    third = shib.thirdOrder([0, 4], [0, 5], [0, 6])
+    # Compute the effecitve coupling for the third order perturbation between impurities at coordinate (0,1), (0, 1), and (1,1)
+    third = shib.thirdOrder(coord1, coord2, coord3)
 
-    # the result is store in the dictionary where the key is the tuple of pauli string
-    # E.g. (0,0,1) = IIX, (1,2,3) = XYZ
+    # the result is store in the dictionary where the key is the tuple of pauli string e.g. (0,0,1) = IIX, (1,2,3) = XYZ
 
-    # Print out the result
+    # Print out the result for J^(2)
+    print("=============================================\n")
     print("Second order perturbation")
     for key, value in second.items():
         if value != 0.0:
             print(key, value)
 
+    # Print out the result for J^(3)
     print("=============================================\n")
     print("Third order perturbation")
     for key, value in third.items():

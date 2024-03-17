@@ -4,7 +4,6 @@ The python package for generating effective couplings between spin 1/2 magnetic 
 
 The package is only designed to generate parameters for model building and to be used in conjunction with other numerical simulation technique such as DMRG, QMC, etc.
 
-All couplings are given in the Pauli string basis.
 
 
 # Installation 
@@ -13,7 +12,48 @@ The dependencies can be installed by running the following command in the termin
 ```python
 pip install -r requirements.txt
 ```
+# usage
 
+All couplings are given in the Pauli string basis, i.e.
+
+```math
+H_{\text{eff}} = \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha} \sigma_{\beta}
++ \sum_{\alpha, \beta, \gamma} J_{\alpha, \beta, \gamma}^{(3)} \sigma_{\alpha} \sigma_{\beta} \sigma_{\gamma}
+```
+
+where \(\alpha, \beta = x, y, z\) and \(\sigma_{\alpha}\) are the Pauli matrices.
+
+
+# Parameters
+
+- `vec1` (np.ndaray): The first lattice unit vector in Cartesian coordinate
+- `vec2` (np.ndarray): The second lattice unit vector in Cartesian coordinate
+- `R` (float): The lattice spacing in meter
+- `alpha` (float): The dimensionless exchange coupling between the impurity and the electron spin
+- `beta` (float): The dimension anisotropy parameter 
+- `lambda_F` (float): The Fermi wavelength in meter 
+- `xi` (float): The superconducting coherence length
+- `B` (float): The magnetic field strength
+- `J` (float): The exchange coupling
+- `mu` (float): The chemical potential
+- `delta` (float): The superconducting gap
+- `N` (float): The number of lattice sites
+
+    # The unit vectors in the Cartesian coordinate
+    vec1: np.ndarray
+    vec2: np.ndarray
+    # The lattice spacing in meter
+    R: float
+    # The dimensionless exchange coupling
+    alpha: float
+    # The small perturbative parameter for the spin flip term
+    beta: float
+    # Fermi wavelength in meter
+    lambda_F: float
+    # Superconductor coherence length in meter
+    xi: float
+    # Magnetic field in Tesla
+    B: float
 # Example
 
 
