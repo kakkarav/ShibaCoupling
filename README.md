@@ -17,11 +17,11 @@ pip install -r requirements.txt
 All couplings are given in the Pauli string basis, i.e.
 
 ```math
-H_{\text{eff}} = \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha} \sigma_{\beta}
-+ \sum_{\alpha, \beta, \gamma} J_{\alpha, \beta, \gamma}^{(3)} \sigma_{\alpha} \sigma_{\beta} \sigma_{\gamma}
+H_{\text{eff}} = \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha}^i \sigma_{\beta}^j
++ \sum_{\alpha, \beta, \gamma} J_{\alpha, \beta, \gamma}^{(3)} \sigma_{\alpha}^i \sigma_{\beta}^j \sigma_{\gamma}^k
 ```
 
-where \(\alpha, \beta = x, y, z\) and \(\sigma_{\alpha}\) are the Pauli matrices.
+where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matricesm and $i,j,k$ are the impurity indices.
 
 
 # Parameters
