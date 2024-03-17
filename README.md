@@ -5,13 +5,14 @@ The python package for generating effective couplings between spin 1/2 magnetic 
 The package is only designed to generate parameters for model building and to be used in conjunction with other numerical simulation technique such as DMRG, QMC, etc.
 
 
-
 # Installation 
 
-The dependencies can be installed by running the following command in the terminal
+The dependencies can be installed by running the following command from the root directory of the package:
+
 ```python
 pip install -r requirements.txt
 ```
+
 # usage
 
 All couplings are given in the Pauli string basis, i.e.
@@ -26,8 +27,8 @@ where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matricesm an
 
 # Parameters
 
-- `vec1` (np.ndaray): The first lattice unit vector in Cartesian coordinate
-- `vec2` (np.ndarray): The second lattice unit vector in Cartesian coordinate
+- `vec1` (numpy.ndarray): The first lattice unit vector in Cartesian coordinate
+- `vec2` (numpy.ndarray): The second lattice unit vector in Cartesian coordinate
 - `R` (float): The lattice spacing in meter
 - `alpha` (float): The dimensionless exchange coupling between the impurity and the electron spin
 - `beta` (float): The dimension anisotropy parameter 
