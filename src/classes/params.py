@@ -9,7 +9,7 @@ def energy(alpha: float) -> float:
 
 # Phase shift from disorder scattering
 # alpha
-def phaseShift(alpha):
+def phaseShift(alpha: float):
     return np.arctan(alpha)
 
 

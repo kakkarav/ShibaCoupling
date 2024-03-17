@@ -1,8 +1,10 @@
 # ShibaCoupling
 
-The python package for generating effective couplings between magnetic impurity inside a superconductor in the presence of a transverse magnetic field.
+The python package for generating effective couplings between spin 1/2 magnetic impurity inside a superconductor in the presence of a transverse magnetic field.
 
-The couplings is given in the Pauli string basis.
+The package is only designed to generate parameters for model building and to be used in conjunction with other numerical simulation technique such as DMRG, QMC, etc.
+
+All couplings are given in the Pauli string basis.
 
 
 # Installation 
@@ -11,6 +13,7 @@ The dependencies can be installed by running the following command in the termin
 ```python
 pip install -r requirements.txt
 ```
+
 # Example
 
 
@@ -35,44 +38,45 @@ params = Params(
 )
 
 
-# Inititate the coupling class
+# Initiate the coupling class
 shib = Coupling(params)
 
-# Compute the effecitve coupling for the second order perturbation
+# Compute the effective coupling for the second order perturbation
 # between impurities at coordinate (1,0) and (0,0)
 second = shib.secondOrder([0, 1], [0, 2])
 
-# All of the paramters are stored in
+# All of the parameters are stored in
 print("Here are the model paramters")
 print(shib.shiba)
 
-# You can find the actualy distance between two points
+# You can find the actual distance between two points
 # at coord1 and coord2
 coord1 = np.array([1, 0])
 coord2 = np.array([0, 1])
 print(f"Distance between two point : {shib.lat.distance(coord2, coord2)}\n")
 
-# Compute the effecitve coupling for the third order perturbation
+# Compute the effective coupling for the third order perturbation
 # between impurities at coordinate (0,1), (0, 0), and (1,0)
 third = shib.thirdOrder([0, 4], [0, 5], [0, 6])
 
-# the result is store in the dictionary where the key is the tuple of pauli string
+# the result is store in the dictionary where the key is the tuple of Pauli string
 # E.g. (0,0,1) = IIX, (1,2,3) = XYZ
 
-# Print out the result
+# Print out the couplings 
 print("Second order perturbation")
 for key, value in second.items():
   if value != 0.0:
     print(key, value)
 
-    print("=============================================\n")
-    print("Third order perturbation")
-    for key, value in third.items():
-      if np.abs(value) != 0:
-        print(key, value)
+print("=============================================\n")
+
+print("Third order perturbation")
+for key, value in third.items():
+  if np.abs(value) != 0:
+    print(key, value)
 ```
 
-To see the output run:
+To test this script, run:
 
 ```python
 python main.py

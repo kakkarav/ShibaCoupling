@@ -7,8 +7,8 @@ from src.decomposition import decompose
 
 def get_A(shib: Shiba, phase: float, R: float) -> complex:
     """
-    Matrix element for Ising pair creation ( initial state is the ket)
-    We set Delta (superconducting gap = 1)
+    Matrix element for Ising pair creation (the initial state is taken to be the ket).
+    We set Delta (superconducting gap) to be 1.
     """
     alpha = shib.alpha
     xi = shib.xi
@@ -41,7 +41,7 @@ def get_B(shib: Shiba, phase: float, R: float) -> complex:
 
 def get_C(shib: Shiba, phase: float, R: float) -> complex:
     """
-    Matrix element for Ising hopping
+    Matrix element for Ising hopping.
     """
     alpha = shib.alpha
     xi = shib.xi
@@ -58,7 +58,7 @@ def get_C(shib: Shiba, phase: float, R: float) -> complex:
 
 def get_D(shib: Shiba, phase: float, R: float) -> complex:
     """
-    Matrix element for spin flipe hopping
+    Matrix element for spin-flip hopping.
     """
     alpha = shib.alpha
     beta = shib.beta
@@ -90,8 +90,7 @@ def destroy(
 ) -> np.ndarray:
     """
     Transfer matrix between subgap states from spin conserving terms
-    This matrix destroys quasiparticle at the first and second positon
-    of the Paulio string index ( coord2, * , coord1)
+    This matrix destroys quasiparticle at the first and second position of the Pauli string index (coord2, *, coord1).
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
@@ -118,9 +117,8 @@ def create(
     coord2: np.ndarray,
 ) -> np.ndarray:
     """
-    Transfer matrix between subgap states from spin-flipping terms
-    This matrix create quasiparticle at the first and second positon
-    of the Pauli string index (coord1, coord2, *)
+    Transfer matrix between subgap states from spin-flipping terms.
+    This matrix create quasiparticle at the first and second positions of the Pauli string index (coord1, coord2, *)
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
@@ -149,9 +147,8 @@ def hop(
     coord2: np.ndarray,
 ) -> np.ndarray:
     """
-    Transfer matrix between subgap states from pairing term
-    The YSR quasiparticle hop from the second to the third index.
-    ( occupied , coord1, *) -> (occupied , *, coord2)
+    Transfer matrix between subgap states from pairing term.
+    The YSR quasiparticle hop from the second to the third index, i.e. (occupied, coord1, *) -> (occupied, *, coord2).
     """
     R = lat.distance(coord1, coord2)
     phase = lat.phase(shiba.B, coord1, coord2)
@@ -173,7 +170,7 @@ def hop(
 
 def U():
     """
-    Permutation matrix that permute the indices cyclically
+    Permutation matrix that permute the indices cyclically.
     """
     return np.array(
         [
@@ -213,8 +210,7 @@ def thirdOrder(
 ) -> dict[tuple, float]:
     """
     Return the table of all coupling arising from third order perturbation theory.
-    We use Pauli string (i,j,k) which cooresponds to position (coord1, coord2, coord3)
-    as our basis
+    We use Pauli string (i, j, k) which corresponds to position (coord1, coord2, coord3) as our basis.
     """
     matrix1 = create(shib, lat, coord1, coord2)
     matrix2 = hop(shib, lat, coord2, coord3)
@@ -230,8 +226,3 @@ def thirdOrder(
         + hc(operator2)
         + hc(operator3)
     )
-    # matrix1 = create(shib, lat, coord1, coord2)
-    # matrix2 = hop(shib, lat, coord2, coord3)
-    # matrix3 = destroy(shib, lat, coord3, coord1)
-    # operator1 = matrix3 @ matrix2 @ matrix1
-    # return decompose(operator1 + hc(operator1))
