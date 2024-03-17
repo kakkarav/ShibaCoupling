@@ -13,7 +13,7 @@ The dependencies can be installed by running the following command from the root
 pip install -r requirements.txt
 ```
 
-# usage
+# Usage
 
 All couplings are given in the Pauli string basis, i.e.
 
