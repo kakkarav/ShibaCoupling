@@ -43,60 +43,68 @@ $J_{\alpha, \beta}^{(2)}$ and $J_{\alpha, \beta, \gamma}^{(3)}$ are the second a
 An example for generating 2-body and 3-body interaction for a square lattice is given in main.py: 
 
 ```python
+# Example of how to use the the module
 import numpy as np
 from src.coupling import Coupling
-from src import matrixElement as me
 from src.classes.params import Params
 
 
 params = Params(
-  vec1=np.array([1, 0]),
-  vec2=np.array([np.cos(np.pi / 3), np.sin(np.pi / 3)]),
-  R=np.sqrt(2) / 2 / np.pi,
-  alpha=0.98,
-  beta=1,
-  lambda_F=0.001,
-  xi=1000,
-  B=100,
+    # The unit vectors in the Cartesian coordinate
+    vec1=np.array([1, 0]),
+    vec2=np.array([np.cos(np.pi / 3), np.sin(np.pi / 3)]),
+    # The lattice spacing in meter
+    R=np.sqrt(2) / 2 / np.pi,
+    # The dimensionless exchange coupling
+    alpha=0.98,
+    # The small perturbative parameter for the spin flip term
+    beta=1,
+    # Fermi wavelength in meter
+    lambda_F=0.001,
+    # Superconductor coherence length in meter
+    xi=1000,
+    # Magnetic field in Tesla
+    B=100,
 )
 
 
-# Initiate the coupling class
-shib = Coupling(params)
+if __name__ == "__main__":
+    # Inititate the coupling class
+    shib = Coupling(params)
 
-# Compute the effective coupling for the second order perturbation
-# between impurities at coordinate (1,0) and (0,0)
-second = shib.secondOrder([0, 1], [0, 2])
+    # Create coordinates for three impurities
+    coord1 = np.array([1, 0])
+    coord2 = np.array([0, 1])
+    coord3 = np.array([1, 1])
 
-# All of the parameters are stored in
-print("Here are the model paramters")
-print(shib.shiba)
+    # Compute the effecitve coupling for the second order perturbation between impurities at coordinate (1,0) and (0,0)
+    second = shib.secondOrder(coord1, coord2)
 
-# You can find the actual distance between two points
-# at coord1 and coord2
-coord1 = np.array([1, 0])
-coord2 = np.array([0, 1])
-print(f"Distance between two point : {shib.lat.distance(coord2, coord2)}\n")
+    # All of the paramters are stored in
+    print("Here are the model paramters")
+    print(shib.shiba)
 
-# Compute the effective coupling for the third order perturbation
-# between impurities at coordinate (0,1), (0, 0), and (1,0)
-third = shib.thirdOrder([0, 4], [0, 5], [0, 6])
+    # You can find the actualy distance between two points at coord1 and coord2
+    print(f"Distance between two point : {shib.lat.distance(coord2, coord2)}\n")
 
-# the result is store in the dictionary where the key is the tuple of Pauli string
-# E.g. (0,0,1) = IIX, (1,2,3) = XYZ
+    # Compute the effecitve coupling for the third order perturbation between impurities at coordinate (0,1), (0, 1), and (1,1)
+    third = shib.thirdOrder(coord1, coord2, coord3)
 
-# Print out the couplings 
-print("Second order perturbation")
-for key, value in second.items():
-  if value != 0.0:
-    print(key, value)
+    # the result is store in the dictionary where the key is the tuple of pauli string e.g. (0,0,1) = IIX, (1,2,3) = XYZ
 
-print("=============================================\n")
+    # Print out the result for J^(2)
+    print("=============================================\n")
+    print("Second order perturbation")
+    for key, value in second.items():
+        if value != 0.0:
+            print(key, value)
 
-print("Third order perturbation")
-for key, value in third.items():
-  if np.abs(value) != 0:
-    print(key, value)
+    # Print out the result for J^(3)
+    print("=============================================\n")
+    print("Third order perturbation")
+    for key, value in third.items():
+        if np.abs(value) != 0:
+            print(key, value)
 ```
 
 To test this script, run:
