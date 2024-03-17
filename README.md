@@ -24,6 +24,7 @@ H_{\text{eff}} = \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha}^i 
 
 where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matricesm and $i,j,k$ are the impurity indices.
 
+$J_{\alpha, \beta}^{(2)}$ and $J_{\alpha, \beta, \gamma}^{(3)}$ are the second and the third effective coupling between the impurities respectively.
 
 # Parameters
 
@@ -35,10 +36,6 @@ where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matricesm an
 - `lambda_F` (float): The Fermi wavelength in meter 
 - `xi` (float): The superconducting coherence length
 - `B` (float): The magnetic field strength
-- `J` (float): The exchange coupling
-- `mu` (float): The chemical potential
-- `delta` (float): The superconducting gap
-- `N` (float): The number of lattice sites
 
 # Example
 
