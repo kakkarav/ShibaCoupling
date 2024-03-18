@@ -2,6 +2,7 @@ import numpy as np
 import pytest
 
 from src.coupling import Coupling
+from src.classes.params import Params
 
 
 @pytest.fixture
@@ -14,12 +15,12 @@ def param():
     lambdaF = 1
     xi = 1
     B = 1
-    return [vec1, vec2, R, alpha, beta, lambdaF, xi, B]
+    return Params(vec1, vec2, R, alpha, beta, lambdaF, xi, B)
 
 
 @pytest.fixture
 def Shib(param):
-    return Coupling(*param)
+    return Coupling(param)
 
 
 def test_location(Shib):
