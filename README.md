@@ -1,6 +1,6 @@
 # ShibaCoupling
 
-The python package for generating effective couplings between spin 1/2 magnetic impurity inside a superconductor in the presence of a transverse magnetic field.
+The python package for generating effective couplings between spin 1/2 magnetic impurities inside a superconductor in the presence of a transverse magnetic field.
 
 The package is only designed to generate parameters for model building and to be used in conjunction with other numerical simulation technique such as DMRG, QMC, etc.
 
@@ -15,11 +15,13 @@ pip install -r requirements.txt
 
 # Usage
 
+The magnetic impurities form a two dimensional lattice spanned by unit vectors `vec1` and `vec2`.
+
 All couplings are given in the Pauli string basis, i.e.
 
 ```math
-H_{\text{eff}} = \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha}^i \sigma_{\beta}^j
-+ \sum_{\alpha, \beta, \gamma} J_{\alpha, \beta, \gamma}^{(3)} \sigma_{\alpha}^i \sigma_{\beta}^j \sigma_{\gamma}^k
+H_{\text{eff}} = \sum_{i,j} \sum_{\alpha, \beta} J_{\alpha, \beta}^{(2)} \sigma_{\alpha}^i \sigma_{\beta}^j
++ \sum_{i,j,k} \sum_{\alpha, \beta, \gamma} J_{\alpha, \beta, \gamma}^{(3)} \sigma_{\alpha}^i \sigma_{\beta}^j \sigma_{\gamma}^k
 ```
 
 where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matricesm and $i,j,k$ are the impurity indices.
@@ -92,14 +94,14 @@ if __name__ == "__main__":
 
     # the result is store in the dictionary where the key is the tuple of pauli string e.g. (0,0,1) = IIX, (1,2,3) = XYZ
 
-    # Print out the result for J^(2)
+    # Print out the result for 2-body coupling J^(2)
     print("=============================================\n")
     print("Second order perturbation")
     for key, value in second.items():
         if value != 0.0:
             print(key, value)
 
-    # Print out the result for J^(3)
+    # Print out the result for 3-body coupling J^(3)
     print("=============================================\n")
     print("Third order perturbation")
     for key, value in third.items():
