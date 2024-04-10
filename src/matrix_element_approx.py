@@ -15,7 +15,7 @@ def get_A(shib: Shiba, phase: float, R: float) -> complex:
     delta = shib.delta
     matrix = -4 * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
-    matrix = matrix * cos(phase) * cos(2 * pi * R) * sin(delta)
+    matrix = matrix * cos(2 * pi * R) * sin(delta)
     # print("A:", matrix)
     return matrix
 
@@ -32,8 +32,7 @@ def get_B(shib: Shiba, phase: float, R: float) -> complex:
     matrix = 8 * beta * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
-        cos(phase) * cos(2 * pi * R) * sin(delta)
-        + 1j * sin(phase) * sin(2 * pi * R) * cos(delta)
+        cos(2 * pi * R) * sin(delta) + 1j * sin(phase) * sin(2 * pi * R) * cos(delta)
     )
     # print("B:", matrix)
     return matrix
@@ -49,8 +48,7 @@ def get_C(shib: Shiba, phase: float, R: float) -> complex:
     matrix = -4 * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
-        cos(phase) * sin(2 * pi * R) * cos(delta)
-        + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
+        sin(2 * pi * R) * cos(delta) + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
     )
     # print("C:", matrix)
     return matrix
@@ -67,8 +65,7 @@ def get_D(shib: Shiba, phase: float, R: float) -> complex:
     matrix = 8 * beta * alpha**2 / (1 + alpha**2) ** (3 / 2)
     matrix = matrix * exp(-R / xi) / 2 / np.pi / R
     matrix = matrix * (
-        cos(phase) * sin(2 * pi * R) * cos(delta)
-        + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
+        sin(2 * pi * R) * cos(delta) + 1j * sin(phase) * cos(2 * pi * R) * sin(delta)
     )
     # print("D:", matrix)
     return matrix
