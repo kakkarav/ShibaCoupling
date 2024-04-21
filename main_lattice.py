@@ -19,7 +19,7 @@ params = Params(
     # Superconductor coherence length in meter
     xi=1000,
     # Magnetic field in Tesla
-    B=1,
+    B=100,
 )
 
 
@@ -27,38 +27,36 @@ if __name__ == "__main__":
     # Inititate the coupling class
     shib = Coupling(params)
 
-    R = 10.0
+    # Create coordinates for three impurities
+    coord1 = np.array([1, 0])
+    coord2 = np.array([0, 1])
+    coord3 = np.array([1, 1])
+
     # Compute the effecitve coupling for the second order perturbation between impurities at coordinate (1,0) and (0,0)
-    second = shib.second_order_approx(R)
+    second = shib.second_order(coord1, coord2)
 
     # All of the paramters are stored in
     print("Here are the model paramters")
     print(shib.shiba)
 
-    # Compute the effecitve coupling for the third order perturbation between impurities at coordinate (0,1), (0, 1), and (1,1)
-    R12 = 10.0
-    R23 = 10.0
-    R31 = 10.0
-    third = shib.third_order_approx(R12, R23, R31)
+    # You can find the actualy distance between two points at coord1 and coord2
+    print(f"Distance between two point : {shib.lat.distance(coord2, coord2)}\n")
 
-    scalar_chirality = shib.chiral_interaction(R12, R23, R31)
+    # Compute the effecitve coupling for the third order perturbation between impurities at coordinate (0,1), (0, 1), and (1,1)
+    third = shib.third_order(coord1, coord2, coord3)
+
     # the result is store in the dictionary where the key is the tuple of pauli string e.g. (0,0,1) = IIX, (1,2,3) = XYZ
 
     # Print out the result for J^(2)
     print("=============================================\n")
-    print("Second-order two-body perturbation")
+    print("Second order perturbation")
     for key, value in second.items():
         if value != 0.0:
             print(key, value)
 
     # Print out the result for J^(3)
     print("=============================================\n")
-    print("Third-order two-body perturbation")
+    print("Third order perturbation")
     for key, value in third.items():
         if np.abs(value) != 0:
             print(key, value)
-
-    # Print out the result for J^(3)
-    print("=============================================\n")
-    print("Third-order chiral perturbation")
-    print(scalar_chirality)
