@@ -28,7 +28,7 @@ if __name__ == "__main__":
     # We will ignore the lattice function here
     shib = Coupling(params)
 
-    R = 4.0
+    R = 5.0
     # Compute the effective coupling for the second order perturbation between impurities separated by distance R
     # J^{(2)}_{\alpha \beta}
     second = shib.second_order_approx(R)
@@ -38,9 +38,9 @@ if __name__ == "__main__":
     print(shib.shiba)
 
     # Consider three spins with separation R12, R23, and R31
-    R12 = 4.0
-    R23 = 4.0
-    R31 = 4.0
+    R12 = 5.0
+    R23 = 5.0
+    R31 = 5.0
 
     # Compute the third-body two-body interactions
     # We assume three impurities here.

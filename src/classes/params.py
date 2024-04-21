@@ -43,7 +43,7 @@ class Shiba:
         self.energy = energy(params.alpha)
         self.delta = phaseShift(params.alpha)
         self.B = params.B
-        self.quantum_flux = 2067.8
+        self.quantum_flux = 2067.8  # Tesla * nm^2
 
     def __repr__(self):
         ans = ""
