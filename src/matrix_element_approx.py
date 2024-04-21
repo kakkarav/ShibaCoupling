@@ -20,12 +20,14 @@ def second_order_zz(shib: Shiba, R: float):
     The zz two-body interaction between two spins
     """
     normalization = normalized_spatial_part(shib, R)
+    excitation_energy = shib.energy * 2
     jzz = (
         -(normalization**2)
         * (1 + 8 * (shib.beta**2))
         / 2.0
         * (cos(2 * pi * R) ** 2)
         * (sin(shib.delta) ** 2)
+        / excitation_energy
     )
     return jzz
 
@@ -35,12 +37,14 @@ def second_order_xx(shib: Shiba, R: float):
     The xx and yy two-body interaction between two spins
     """
     normalization = normalized_spatial_part(shib, R)
+    excitation_energy = shib.energy * 2
     jxx = (
         -(normalization**2)
         * 4
         * (shib.beta**2)
         * (cos(2 * pi * R) ** 2)
         * (sin(shib.delta) ** 2)
+        / excitation_energy
     )
     return jxx
 
@@ -54,6 +58,7 @@ def third_order_zz_intermediate(shib: Shiba, R12: float, R23: float, R31: float)
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)
+    excitation_energy = shib.energy * 2
     trig = (
         -sin(2 * pi * R12) * cos(2 * pi * R23) * cos(2 * pi * R31)
         + sin(2 * pi * R23) * cos(2 * pi * R31) * cos(2 * pi * R12)
@@ -68,6 +73,7 @@ def third_order_zz_intermediate(shib: Shiba, R12: float, R23: float, R31: float)
         * (sin(shib.delta) ** 2)
         * (sin(shib.delta) ** 2)
         * cos(shib.delta)
+        / (excitation_energy**2)
     )
     return jzz
 
@@ -81,6 +87,7 @@ def third_order_xx_intermediate(shib: Shiba, R12: float, R23: float, R31: float)
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)
+    excitation_energy = shib.energy * 2
     trig = (
         -sin(2 * pi * R12) * cos(2 * pi * R23) * cos(2 * pi * R31)
         + sin(2 * pi * R23) * cos(2 * pi * R31) * cos(2 * pi * R12)
@@ -95,6 +102,7 @@ def third_order_xx_intermediate(shib: Shiba, R12: float, R23: float, R31: float)
         * (sin(shib.delta) ** 2)
         * (sin(shib.delta) ** 2)
         * cos(shib.delta)
+        / (excitation_energy**2)
     )
     return jxx
 
@@ -106,13 +114,15 @@ def chiral_interaction(shib: Shiba, R12: float, R23: float, R31: float):
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)
+    excitation_energy = shib.energy * 2
     return (
         -(n1 * n2 * n3)
         * 2
         * (shib.beta**2)
-        * sin(flux / shib.quantum_flux)
+        * sin(2 * pi * flux / shib.quantum_flux)
         * sin(shib.delta) ** 3
         * cos(2 * np.pi * R12)
         * cos(2 * np.pi * R23)
         * cos(2 * np.pi * R31)
+        / (excitation_energy**2)
     )
