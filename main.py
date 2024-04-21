@@ -42,6 +42,7 @@ if __name__ == "__main__":
     R23 = 5.0
     R31 = 5.0
 
+    # test
     # Compute the third-body two-body interactions
     # We assume three impurities here.
     # For a lattice, we need to sum over the third spin to get the final third order coupling
@@ -58,15 +59,13 @@ if __name__ == "__main__":
     print("=============================================\n")
     print("Second-order two-body perturbation")
     for key, value in second.items():
-        if value != 0.0:
-            print(key, ":", value)
+        print(key, ":", value)
 
     # Print out the result for J^{(3)}_{\alpha \beta \gamma}
     print("=============================================\n")
     print("Third-order two-body perturbation")
     for key, value in third.items():
-        if np.abs(value) != 0:
-            print(key, ":", value)
+        print(key, ":", value)
 
     # Print out the result for J^(\Delta)_{\alpha \beta \gamma}
     print("=============================================\n")

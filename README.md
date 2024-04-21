@@ -73,8 +73,9 @@ if __name__ == "__main__":
     # Initiate the coupling class
     # We will ignore the lattice function here
     shib = Coupling(params)
+    
 
-    R = 5.0
+    R = 5.0 * a 
     # Compute the effective coupling for the second order perturbation between impurities separated by distance R
     # J^{(2)}_{\alpha \beta}
     second = shib.second_order_approx(R)
