@@ -23,7 +23,7 @@ H_{\text{eff}} = \sum_{i,j} \sum_{\alpha, \beta} J_{\alpha, \beta} \sigma_{\alph
 + \sum_{i,j,k} \sum_{\alpha, \beta, \gamma} J_{\alpha \beta \gamma}^{\Delta} \sigma_{\alpha}^i \sigma_{\beta}^j \sigma_{\gamma}^k
 ```
 
-where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matrices and $\alpha \beta \gamma$ are the impurity indices. $J_{\alpha \beta}$ and $J_{\alpha \beta \gamma}^{\Delta}$ are the second and the third effective coupling between the impurities respectively.
+where $\alpha, \beta = x, y, z$ and $\sigma_{\alpha}$ are the Pauli matrices and $\alpha, \beta, \gamma$ are the impurity indices. $J_{\alpha \beta}$ and $J_{\alpha \beta \gamma}^{\Delta}$ are the second and the third effective coupling between the impurities respectively.
 
 Specifically, the two-body term $J_{\alpha \beta} = J^{(2)}_{\alpha \beta} + J^{(3)}_{\alpha \beta}$ contains the contributions from the second and the third perturbation.
 To obtain the third order contribution $J^{(3)}_{\alpha \beta} = \sum_{ \gamma \neq \alpha \beta} J^{(3)}_{\alpha \beta \gamma}$, we need sum over the third spectator spin.
