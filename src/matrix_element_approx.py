@@ -102,12 +102,13 @@ def chiral_interaction(shib: Shiba, R12: float, R23: float, R31: float):
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)
+    print(cos(area * shib.B))
     return (
         n1
         * n2
         * n3
-        * cos(area * shib.B)
-        * cos(shib.delta) ** 3
+        * sin(area * shib.B)
+        * sin(shib.delta) ** 3
         * cos(2 * np.pi * R12)
         * cos(2 * np.pi * R23)
         * cos(2 * np.pi * R31)
