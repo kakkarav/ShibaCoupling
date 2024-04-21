@@ -75,7 +75,7 @@ if __name__ == "__main__":
     shib = Coupling(params)
     
 
-    R = 5.0 * a 
+    R = 5.0
     # Compute the effective coupling for the second order perturbation between impurities separated by distance R
     # J^{(2)}_{\alpha \beta}
     second = shib.second_order_approx(R)
