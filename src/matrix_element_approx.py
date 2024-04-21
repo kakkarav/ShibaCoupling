@@ -13,6 +13,9 @@ def normalized_spatial_part(shib: Shiba, R: float):
 
 
 def second_order_zz(shib: Shiba, R: float):
+    """
+    The zz two-body interaction between two spins
+    """
     normalization = normalized_spatial_part(shib, R)
     jzz = (
         -(normalization**2)
@@ -25,6 +28,9 @@ def second_order_zz(shib: Shiba, R: float):
 
 
 def second_order_xx(shib: Shiba, R: float):
+    """
+    The xx and yy two-body interaction between two spins
+    """
     normalization = normalized_spatial_part(shib, R)
     jxx = (
         -(normalization**2)
@@ -37,6 +43,11 @@ def second_order_xx(shib: Shiba, R: float):
 
 
 def third_order_zz_intermediate(shib: Shiba, R12: float, R23: float, R31: float):
+    """
+    This zz third-order two-body spin interaction between spin at site 1 and site 2
+    due to the presence of spin at site 3.
+    To find the total effective interaction, we must sum the interaction over the third spin.
+    """
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)
@@ -58,7 +69,12 @@ def third_order_zz_intermediate(shib: Shiba, R12: float, R23: float, R31: float)
     return jzz
 
 
-def third_order_xx(shib: Shiba, R12: float, R23: float, R31: float):
+def third_order_xx_intermediate(shib: Shiba, R12: float, R23: float, R31: float):
+    """
+    This xx and yy third-order two-body spin interaction between spin at site 1 and site 2
+    due to the presence of spin at site 3.
+    To find the total effective interaction, we must sum the interaction over the third spin.
+    """
     n1 = normalized_spatial_part(shib, R12)
     n2 = normalized_spatial_part(shib, R23)
     n3 = normalized_spatial_part(shib, R31)

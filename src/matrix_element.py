@@ -186,7 +186,7 @@ def U():
     )
 
 
-def secondOrder(
+def total_second_order(
     lat: Lattice,
     shib: Shiba,
     coord1: np.ndarray,
@@ -201,7 +201,7 @@ def secondOrder(
     return decompose(hc(matrix) @ matrix)
 
 
-def thirdOrder(
+def total_third_order(
     lat: Lattice,
     shib: Shiba,
     coord1: np.ndarray,

@@ -9,32 +9,48 @@ class Coupling:
         self.lat = lattice.Lattice(parameters)
         self.shiba = params.Shiba(parameters)
 
-    def secondOrder(self, coord1: np.ndarray, coord2: np.ndarray):
+    def second_order(self, coord1: np.ndarray, coord2: np.ndarray):
         """
         Return a dictionary contain all coupling.
         We will get 2-body interaction but will will also include the third spin for consistency
         """
-        return me.secondOrder(self.lat, self.shiba, coord1, coord2)
+        return me.total_second_order(self.lat, self.shiba, coord1, coord2)
 
-    def thirdOrder(self, coord1: np.ndarray, coord2: np.ndarray, coord3: np.ndarray):
+    def third_order(self, coord1: np.ndarray, coord2: np.ndarray, coord3: np.ndarray):
         """
         Return a dictioanry contain all coupling where the order of the operator index are conserved.
         correspond to the orfer of the coordoinate
         """
-        return me.thirdOrder(self.lat, self.shiba, coord1, coord2, coord3)
+        return me.total_third_order(self.lat, self.shiba, coord1, coord2, coord3)
 
-    def secondOrderApprox(self, coord1: np.ndarray, coord2: np.ndarray):
+    def second_order_approx(self, distance: float):
         """
         Return a dictionary contain all coupling.
         We will get 2-body interaction but will will also include the third spin for consistency
-        """
-        return mea.secondOrder(self.lat, self.shiba, coord1, coord2)
 
-    def thirdOrderApprox(
-        self, coord1: np.ndarray, coord2: np.ndarray, coord3: np.ndarray
-    ):
+        R: distance in the unit of Fermi wavelength
+        """
+        couplings = {}
+        couplings[(1, 1)] = mea.second_order_xx(self.shiba, distance)
+        couplings[(2, 2)] = mea.second_order_xx(self.shiba, distance)
+        couplings[(3, 3)] = mea.second_order_zz(self.shiba, distance)
+        return couplings
+
+    def third_order_approx(self, R12: float, R23: float, R31: float):
         """
         Return a dictioanry contain all coupling where the order of the operator index are conserved.
         correspond to the orfer of the coordoinate
+
+        R: distance in the unit of Fermi wavelength
         """
-        return mea.thirdOrder(self.lat, self.shiba, coord1, coord2, coord3)
+        couplings = {}
+        couplings[(1, 1)] = mea.third_order_zz_intermediate(self.shiba, R12, R23, R31)
+        couplings[(2, 2)] = mea.third_order_xx_intermediate(self.shiba, R12, R23, R31)
+        couplings[(3, 3)] = mea.third_order_xx_intermediate(self.shiba, R12, R23, R31)
+        return couplings
+
+    def chiral_interaction(self, R12: float, R23: float, R31: float):
+        """
+        Return the chiral interaction between three spins.
+        """
+        return mea.chiral_interaction(self.shiba, R12, R23, R31)
