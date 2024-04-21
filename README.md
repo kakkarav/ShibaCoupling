@@ -57,15 +57,15 @@ params = Params(
     # The lattice spacing in nanometer
     R=np.sqrt(2) / 2 / np.pi,
     # The dimensionless exchange coupling (<1)
-    alpha=0.98,
+    alpha=0.97,
     # The small perturbative parameter for the spin flip term (<<1)
-    beta=0.1,
+    beta=0.5,
     # Fermi wavelength in nanometer
     lambda_F=10.0,
     # Superconductor coherence length in nanometer
     xi=50.0,
     # Magnetic field in Tesla
-    B=0.1,
+    B=0.2,
 )
 
 
@@ -74,9 +74,7 @@ if __name__ == "__main__":
     # We will ignore the lattice function here
     shib = Coupling(params)
 
-    # the spin separation in the unit of Fermi wavelength
-    R = 10.0
-
+    R = 5.0
     # Compute the effective coupling for the second order perturbation between impurities separated by distance R
     # J^{(2)}_{\alpha \beta}
     second = shib.second_order_approx(R)
@@ -86,9 +84,9 @@ if __name__ == "__main__":
     print(shib.shiba)
 
     # Consider three spins with separation R12, R23, and R31
-    R12 = 10.0
-    R23 = 10.0
-    R31 = 10.0
+    R12 = 5.0
+    R23 = 5.0
+    R31 = 5.0
 
     # Compute the third-body two-body interactions
     # We assume three impurities here.
@@ -120,7 +118,6 @@ if __name__ == "__main__":
     print("=============================================\n")
     print("Third-order chiral perturbation")
     print("Chiral :", scalar_chirality)
-
 ```
 
 To test this script, run:
