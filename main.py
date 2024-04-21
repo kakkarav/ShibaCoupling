@@ -42,7 +42,6 @@ if __name__ == "__main__":
     R23 = 5.0
     R31 = 5.0
 
-    # test
     # Compute the third-body two-body interactions
     # We assume three impurities here.
     # For a lattice, we need to sum over the third spin to get the final third order coupling
