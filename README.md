@@ -74,7 +74,9 @@ if __name__ == "__main__":
     # We will ignore the lattice function here
     shib = Coupling(params)
 
+    # the spin separation in the unit of Fermi wavelength
     R = 10.0
+
     # Compute the effective coupling for the second order perturbation between impurities separated by distance R
     # J^{(2)}_{\alpha \beta}
     second = shib.second_order_approx(R)
